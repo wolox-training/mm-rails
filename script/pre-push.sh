@@ -4,11 +4,11 @@
 # RUN_CHECK_CMD='bundle exec rspec spec -fd'
 # RUN_TESTS_OUTPUT=`${RUN_CHECK_CMD}`
 
-# if [ $? -eq 1 ]
-# then
-#   echo "\033[34mCan't commit! You've broken Rspec tests!!!\033[0m"
-#   exit 1
-# fi
+if [ $? -eq 1 ]
+then
+  echo "\033[34mCan't commit! You've broken Rspec tests!!!\033[0m"
+  exit 1
+fi
 
 # echo "\033[34mRunning SCSS Lint\033[0m"
 # RUN_CHECK_CMD='bundle exec scss-lint app/assets/stylesheets/'
