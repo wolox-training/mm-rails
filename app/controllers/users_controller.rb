@@ -14,29 +14,10 @@ class UsersController < ApplicationController
 
   # GET /users/me
   def me
-    render json: current_user
-  end
-
-  # POST /users
-  def create
-    create_params = params.require(:user)
-                          .permit(:email, :password, :password_confirmation,
-                                  :first_name, :last_name, :locale)
-    @user = User.new(create_params)
-
-    if @user.save
-      render json: @user, status: :created
+    if current_user
+      render json: current_user
     else
-      render json: @user.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH /users/1
-  def update
-    if @user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: {}, status: :not_found
     end
   end
 
