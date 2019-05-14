@@ -5,6 +5,8 @@ describe Book do
   subject(:invalid_year_book) { build(:book, year: '125.4') }
   subject(:missing_author_book) { build(:book, author: nil) }
   subject(:empty_title_book) { build(:book, title: '') }
+  subject(:empty_genre_book) { build(:book, genre: '') }
+  subject(:empty_description_book) { build(:book, description: '') }
 
   describe '#save' do
     context 'When the book is created' do
@@ -27,6 +29,18 @@ describe Book do
     end
 
     context 'when title is empty' do
+      it 'fails at save' do
+        expect { missing_author_book.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context 'when genre is empty' do
+      it 'fails at save' do
+        expect { missing_author_book.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context 'when description is empty' do
       it 'fails at save' do
         expect { missing_author_book.save! }.to raise_error(ActiveRecord::RecordInvalid)
       end
