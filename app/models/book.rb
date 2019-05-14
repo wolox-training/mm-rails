@@ -12,4 +12,6 @@ class Book < ApplicationRecord
     ->(genre:) { where(genre: genre) },
     ->(title:) { where(title: title) }
   )
+
+  has_many :rents, dependent: :destroy
 end
