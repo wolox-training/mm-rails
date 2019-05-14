@@ -5,13 +5,11 @@ class Book < ApplicationRecord
   scope :author, ->(author) { where author: author }
   scope :genre, ->(genre) { where genre: genre }
   scope :title, ->(title) { where title: title }
-  scope :description, ->(description) { where description: description }
 
   Reducer = Rack::Reducer.new(
     Book.all,
     ->(author:) { where(author: author) },
     ->(genre:) { where(genre: genre) },
-    ->(title:) { where(title: title) },
-    ->(description:) { where(description: description) }
+    ->(title:) { where(title: title) }
   )
 end
