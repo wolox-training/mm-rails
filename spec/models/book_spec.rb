@@ -11,8 +11,7 @@ describe Book do
   it { is_expected.to validate_numericality_of(:year).only_integer }
 
   describe '#save' do
-    subject(:save) { book.save }
-    context 'When the book is created' do
+    context 'When a valid book is saved' do
       it 'Generates an id' do
         book.save!
         expect(book.id).to be_present
