@@ -14,4 +14,8 @@ class Book < ApplicationRecord
   )
 
   has_many :rents, dependent: :destroy
+
+  def actual_rent
+    rents.order(starting_date: :desc).first
+  end
 end
