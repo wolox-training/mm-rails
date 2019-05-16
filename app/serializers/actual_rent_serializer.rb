@@ -1,5 +1,11 @@
 class ActualRentSerializer < ActiveModel::Serializer
-  attributes :id, :book_id, :user_id
-  attribute :starting_date, key: :from
-  attribute :ending_date, key: :to
+  attributes :id, :from, :to, :book_id, :user_id
+
+  def from
+    object.starting_date
+  end
+
+  def to
+    object.ending_date
+  end
 end
