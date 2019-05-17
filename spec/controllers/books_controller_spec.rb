@@ -1,5 +1,4 @@
 require 'rails_helper'
-require_relative 'shared_context'
 
 describe BooksController do
   describe 'GET #index' do
