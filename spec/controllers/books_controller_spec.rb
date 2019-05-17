@@ -2,12 +2,9 @@ require 'rails_helper'
 require_relative 'shared_context'
 
 describe BooksController do
-  it { is_expected.to route(:get, '/books').to(action: :index) }
-  it { is_expected.to route(:get, '/books/1').to(action: :show, id: 1) }
-
   describe 'GET #index' do
     context 'When an user is authenticated' do
-      include_context 'Authenticated User'
+      include_context 'With an authenticated User'
       context 'When fetching all the books' do
         let!(:books) { create_list(:book, 5) }
         before { get :index }
@@ -50,10 +47,11 @@ describe BooksController do
       end
 
       context 'When params[:genre] == Action' do
+        searched_genre = 'Action'
         before do
-          create_list(:book, 5, genre: 'Action')
+          create_list(:book, 5, genre: searched_genre)
           create_list(:book, 5, genre: 'Fantasy')
-          get :index, params: { genre: 'Action' }
+          get :index, params: { genre: searched_genre }
         end
         subject { response_body }
 
@@ -64,16 +62,17 @@ describe BooksController do
         end
         it 'returns only books with genre == Action' do
           expect(response_body['page'].map { |book| book['genre'] }).to satisfy do |genres|
-            genres.all? { |genre| genre == 'Action' }
+            genres.all? { |genre| genre == searched_genre }
           end
         end
       end
 
       context 'When params[:author] == Bradford Nolan DDS' do
+        searched_author = 'Bradford Nolan DDS'
         before do
-          create_list(:book, 2, author: 'Bradford Nolan DDS')
+          create_list(:book, 2, author: searched_author)
           create_list(:book, 1, author: 'Luis Miguel')
-          get :index, params: { author: 'Bradford Nolan DDS' }
+          get :index, params: { author: searched_author }
         end
         subject { response_body }
 
@@ -83,16 +82,17 @@ describe BooksController do
         end
         it 'returns only books with author == Bradford Nolan DDS' do
           expect(response_body['page'].map { |book| book['author'] }).to satisfy do |authors|
-            authors.all? { |author| author == 'Bradford Nolan DDS' }
+            authors.all? { |author| author == searched_author }
           end
         end
       end
 
       context 'When params[:title] == La biblia!' do
+        searched_title = 'La biblia!'
         before do
-          create(:book, title: 'La biblia!')
+          create(:book, title: searched_title)
           create(:book, title: 'Harry Potter')
-          get :index, params: { title: 'La biblia!' }
+          get :index, params: { title: searched_title }
         end
         subject { response_body }
 
@@ -101,7 +101,7 @@ describe BooksController do
           expect(response_body['page'].length).to eq 1
         end
         it 'returns only a book with title == La biblia!' do
-          expect(response_body['page'][0]['title']).to eq 'La biblia!'
+          expect(response_body['page'][0]['title']).to eq searched_title
         end
       end
     end
@@ -114,27 +114,37 @@ describe BooksController do
   end
 
   describe 'GET #show' do
-    let(:book) { create(:book) }
-
     context 'When an user is authenticated' do
-      include_context 'Authenticated User'
-      before { get :show, params: { id: book.id } }
+      include_context 'With an authenticated User'
+      context 'When searching for a book' do
+        let(:book) { create(:book) }
+        before { get :show, params: { id: book.id } }
 
-      it { is_expected.to respond_with :ok }
+        it { is_expected.to respond_with :ok }
 
-      it 'responses with the book json' do
-        expected = BookSerializer.new(book, root: false).to_json
-        expect(response_body.to_json).to eq expected
+        it 'responses with the book json' do
+          expected = BookSerializer.new(book, root: false).to_json
+          expect(response_body.to_json).to eq expected
+        end
+
+        it 'responses with a json' do
+          expect(response.content_type).to eq 'application/json'
+        end
       end
 
-      it 'responses with a json' do
-        expect(response.content_type).to eq 'application/json'
+      context 'when searching for an unexisting book' do
+        let(:book) { create(:book, id: 1) }
+        searched_id = 2
+        before { get :show, params: { id: searched_id } }
+
+        it { is_expected.to respond_with :not_found }
       end
     end
 
     context 'When there is not an authenticated user' do
       context 'When fetching a book' do
-        before { get :index }
+        let(:book) { create(:book) }
+        before { get :show, params: { id: book.id } }
 
         it { is_expected.to respond_with :unauthorized }
       end
