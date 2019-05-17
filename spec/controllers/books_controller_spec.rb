@@ -6,9 +6,10 @@ describe BooksController do
       include_context 'With an authenticated User'
       context 'When fetching all the books' do
         let!(:books) { create_list(:book, 5) }
-        before { get :index }
+        subject(:http_response) { get :index }
+        before { http_response }
 
-        it { is_expected.to respond_with :ok }
+        it { is_expected.to have_http_status :ok }
 
         it 'responses with a json' do
           expect(response.content_type).to eq 'application/json'
@@ -29,9 +30,10 @@ describe BooksController do
       context 'When fetching with limit' do
         let(:limit) { 2 }
         let!(:books) { create_list(:book, 10) }
-        before { get :index, params: { limit: limit } }
+        subject(:http_response) { get :index, params: { limit: limit } }
+        before { http_response }
 
-        it { is_expected.to respond_with :ok }
+        it { is_expected.to have_http_status :ok }
 
         it 'responses with a json' do
           expect(response.content_type).to eq 'application/json'
@@ -48,14 +50,15 @@ describe BooksController do
 
       context 'when searching by genre_name' do
         let(:genre_name) { 'Action' }
+        subject(:http_response) { get :index, params: { genre: genre_name } }
+
         before do
           create_list(:book, 5, genre: genre_name)
           create_list(:book, 5, genre: 'Fantasy')
-          get :index, params: { genre: genre_name }
+          http_response
         end
-        subject { response_body }
 
-        it { is_expected.to be_paginated }
+        it { expect(response_body).to be_paginated }
 
         it 'responses with a json with 5 books' do
           expect(response_body['count']).to eq 5
@@ -69,14 +72,15 @@ describe BooksController do
 
       context 'when searching by author name' do
         let(:author_name) { 'Bradford Nolan DDS' }
+        subject(:http_response) { get :index, params: { author: author_name } }
+
         before do
           create_list(:book, 2, author: author_name)
           create_list(:book, 1, author: 'Luis Miguel')
-          get :index, params: { author: author_name }
+          http_response
         end
-        subject { response_body }
 
-        it { is_expected.to be_paginated }
+        it { expect(response_body).to be_paginated }
         it 'responses with a json with 2 books' do
           expect(response_body['count']).to eq 2
         end
@@ -89,14 +93,14 @@ describe BooksController do
 
       context 'when searching by title' do
         let(:title) { 'La biblia!' }
+        subject(:http_response) { get :index, params: { title: title } }
         before do
           create(:book, title: title)
           create(:book, title: 'Harry Potter')
-          get :index, params: { title: title }
+          http_response
         end
-        subject { response_body }
 
-        it { is_expected.to be_paginated }
+        it { expect(response_body).to be_paginated }
         it 'responses with a json with 1 book' do
           expect(response_body['count']).to eq 1
         end
@@ -107,8 +111,9 @@ describe BooksController do
     end
     context 'whithout an authenticated user' do
       context 'When fetching all the books' do
-        before { get :index }
-        it { is_expected.to respond_with :unauthorized }
+        subject(:http_response) { get :index }
+        before { http_response }
+        it { is_expected.to have_http_status :unauthorized }
       end
     end
   end
@@ -118,9 +123,10 @@ describe BooksController do
       include_context 'With an authenticated User'
       context 'When searching for a book' do
         let(:book) { create(:book) }
-        before { get :show, params: { id: book.id } }
+        subject(:http_response) { get :show, params: { id: book.id } }
+        before { http_response }
 
-        it { is_expected.to respond_with :ok }
+        it { is_expected.to have_http_status :ok }
 
         it 'responses with the book json' do
           expected = BookSerializer.new(book, root: false).to_json
@@ -133,20 +139,21 @@ describe BooksController do
       end
 
       context 'when searching for an unexisting book' do
-        let(:book) { create(:book, id: 1) }
-        let(:searched_id) { 2 }
-        before { get :show, params: { id: searched_id } }
+        let(:searched_id) { -1 }
+        subject(:http_response) { get :show, params: { id: searched_id } }
+        before { http_response }
 
-        it { is_expected.to respond_with :not_found }
+        it { is_expected.to have_http_status :not_found }
       end
     end
 
     context 'without an authenticated user' do
       context 'When fetching a book' do
         let(:book) { create(:book) }
-        before { get :show, params: { id: book.id } }
+        subject(:http_response) { get :show, params: { id: book.id } }
+        before { http_response }
 
-        it { is_expected.to respond_with :unauthorized }
+        it { is_expected.to have_http_status :unauthorized }
       end
     end
   end
