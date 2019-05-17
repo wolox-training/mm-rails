@@ -61,8 +61,8 @@ describe BooksController do
           expect(response_body['count']).to eq 5
         end
         it 'returns only books with genre == Action' do
-          expect(response_body['page'].map { |book| book['genre'] }).to satisfy do |genres|
-            genres.all? { |genre| genre == genre_name }
+          expect(response_body['page'].pluck('genre')).to be_all do |genre|
+            genre == genre_name
           end
         end
       end
@@ -81,8 +81,8 @@ describe BooksController do
           expect(response_body['count']).to eq 2
         end
         it 'returns books filtered by author name' do
-          expect(response_body['page'].map { |book| book['author'] }).to satisfy do |authors|
-            authors.all? { |author| author == author_name }
+          expect(response_body['page'].pluck('author')).to be_all do |author|
+            author == author_name
           end
         end
       end
@@ -100,7 +100,7 @@ describe BooksController do
         it 'responses with a json with 1 book' do
           expect(response_body['count']).to eq 1
         end
-        it 'returns only a book with title == La biblia!' do
+        it 'returns books with the searched title' do
           expect(response_body['page'][0]['title']).to eq title
         end
       end
