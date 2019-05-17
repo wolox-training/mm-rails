@@ -14,4 +14,9 @@ class Book < ApplicationRecord
   )
 
   has_many :rents, dependent: :destroy
+
+  def actual_rent
+    rents.find_by(':current_date between starting_date and ending_date',
+                  current_date: Time.zone.today)
+  end
 end
