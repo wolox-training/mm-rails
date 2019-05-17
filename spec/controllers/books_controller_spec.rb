@@ -8,8 +8,8 @@ describe BooksController do
   describe 'GET #index' do
     context 'When an user is authenticated' do
       include_context 'Authenticated User'
-      let!(:books) { create_list(:book, 5) }
       context 'When fetching all the books' do
+        let!(:books) { create_list(:book, 5) }
         before { get :index }
 
         it { is_expected.to respond_with :ok }
@@ -31,6 +31,7 @@ describe BooksController do
       end
 
       context 'When params[:limit] == 2' do
+        let!(:books) { create_list(:book, 10) }
         before { get :index, params: { limit: 2 } }
 
         it { is_expected.to respond_with :ok }
@@ -64,25 +65,6 @@ describe BooksController do
         it 'returns only books with genre == Action' do
           expect(response_body['page'].map { |book| book['genre'] }).to satisfy do |genres|
             genres.all? { |genre| genre == 'Action' }
-          end
-        end
-      end
-
-      context 'When params[:author] == Bradford Nolan DDS' do
-        before do
-          create_list(:book, 2, author: 'Bradford Nolan DDS')
-          create_list(:book, 1, author: 'Luis Miguel')
-          get :index, params: { author: 'Bradford Nolan DDS' }
-        end
-        subject { response_body }
-
-        it { is_expected.to be_paginated }
-        it 'responses with a json with 2 books' do
-          expect(response_body['page'].length).to eq 2
-        end
-        it 'returns only books with author == Bradford Nolan DDS' do
-          expect(response_body['page'].map { |book| book['author'] }).to satisfy do |authors|
-            authors.all? { |author| author == 'Bradford Nolan DDS' }
           end
         end
       end
