@@ -26,9 +26,10 @@ describe BooksController do
         end
       end
 
-      context 'When params[:limit] == 2' do
+      context 'When fetching with limit' do
+        let(:limit) { 2 }
         let!(:books) { create_list(:book, 10) }
-        before { get :index, params: { limit: 2 } }
+        before { get :index, params: { limit: limit } }
 
         it { is_expected.to respond_with :ok }
 
@@ -41,70 +42,70 @@ describe BooksController do
         end
 
         it 'responses with a 2 books json' do
-          expect(response_body['page'].length).to eq 2
+          expect(response_body['count']).to eq 2
         end
       end
 
-      context 'When params[:genre] == Action' do
-        searched_genre = 'Action'
+      context 'when searching by genre_name' do
+        let(:genre_name) { 'Action' }
         before do
-          create_list(:book, 5, genre: searched_genre)
+          create_list(:book, 5, genre: genre_name)
           create_list(:book, 5, genre: 'Fantasy')
-          get :index, params: { genre: searched_genre }
+          get :index, params: { genre: genre_name }
         end
         subject { response_body }
 
         it { is_expected.to be_paginated }
 
         it 'responses with a json with 5 books' do
-          expect(response_body['page'].length).to eq 5
+          expect(response_body['count']).to eq 5
         end
         it 'returns only books with genre == Action' do
           expect(response_body['page'].map { |book| book['genre'] }).to satisfy do |genres|
-            genres.all? { |genre| genre == searched_genre }
+            genres.all? { |genre| genre == genre_name }
           end
         end
       end
 
-      context 'When params[:author] == Bradford Nolan DDS' do
-        searched_author = 'Bradford Nolan DDS'
+      context 'when searching by author name' do
+        let(:author_name) { 'Bradford Nolan DDS' }
         before do
-          create_list(:book, 2, author: searched_author)
+          create_list(:book, 2, author: author_name)
           create_list(:book, 1, author: 'Luis Miguel')
-          get :index, params: { author: searched_author }
+          get :index, params: { author: author_name }
         end
         subject { response_body }
 
         it { is_expected.to be_paginated }
         it 'responses with a json with 2 books' do
-          expect(response_body['page'].length).to eq 2
+          expect(response_body['count']).to eq 2
         end
-        it 'returns only books with author == Bradford Nolan DDS' do
+        it 'returns books filtered by author name' do
           expect(response_body['page'].map { |book| book['author'] }).to satisfy do |authors|
-            authors.all? { |author| author == searched_author }
+            authors.all? { |author| author == author_name }
           end
         end
       end
 
-      context 'When params[:title] == La biblia!' do
-        searched_title = 'La biblia!'
+      context 'when searching by title' do
+        let(:title) { 'La biblia!' }
         before do
-          create(:book, title: searched_title)
+          create(:book, title: title)
           create(:book, title: 'Harry Potter')
-          get :index, params: { title: searched_title }
+          get :index, params: { title: title }
         end
         subject { response_body }
 
         it { is_expected.to be_paginated }
         it 'responses with a json with 1 book' do
-          expect(response_body['page'].length).to eq 1
+          expect(response_body['count']).to eq 1
         end
         it 'returns only a book with title == La biblia!' do
-          expect(response_body['page'][0]['title']).to eq searched_title
+          expect(response_body['page'][0]['title']).to eq title
         end
       end
     end
-    context 'When there is not an authenticated user' do
+    context 'whithout an authenticated user' do
       context 'When fetching all the books' do
         before { get :index }
         it { is_expected.to respond_with :unauthorized }
@@ -133,14 +134,14 @@ describe BooksController do
 
       context 'when searching for an unexisting book' do
         let(:book) { create(:book, id: 1) }
-        searched_id = 2
+        let(:searched_id) { 2 }
         before { get :show, params: { id: searched_id } }
 
         it { is_expected.to respond_with :not_found }
       end
     end
 
-    context 'When there is not an authenticated user' do
+    context 'without an authenticated user' do
       context 'When fetching a book' do
         let(:book) { create(:book) }
         before { get :show, params: { id: book.id } }
