@@ -1,4 +1,7 @@
 class RentsController < ApplicationController
+  include Wor::Paginate
+  before_action :authenticate_user!
+
   def index
     render_paginated json: current_user.rents
   end
