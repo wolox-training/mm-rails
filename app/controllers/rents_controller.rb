@@ -3,7 +3,7 @@ class RentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    render_paginated json: current_user.rents
+    render_paginated current_user.rents
   end
 
   def create
