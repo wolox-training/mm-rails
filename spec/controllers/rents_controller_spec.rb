@@ -6,6 +6,8 @@ describe RentsController do
   let!(:book) { create :book }
   let!(:book2) { create :book }
   describe 'GET #index' do
+    subject(:http_response) { get :index, params: { user_id: current_user.id } }
+
     context 'when an user is authenticated' do
       include_context 'With an authenticated User'
       let!(:rent1) do
@@ -17,7 +19,7 @@ describe RentsController do
                     starting_date: starting_date, ending_date: ending_date
       end
       context 'when fetching all the rents' do
-        subject!(:http_response) { get :index, params: { user_id: current_user.id } }
+        before { http_response }
 
         it { is_expected.to have_http_status :ok }
 
@@ -39,30 +41,23 @@ describe RentsController do
       end
     end
 
-    context 'without an authenticated user' do
-      let(:user) { create(:user) }
-      subject!(:http_response) { get :index, params: { user_id: user.id } }
-
-      it { is_expected.to have_http_status :unauthorized }
-    end
+    include_examples 'without an authenticated user'
   end
 
   describe 'POST #create' do
     subject(:http_response) do
       post :create,
-           params: { user_id: user.id,
+           params: { user_id: current_user.id,
                      rent: rent_json },
            format: :json
     end
+    let(:rent_json) do
+      { book_id: book.id, user_id: current_user.id,
+        starting_date: starting_date, ending_date: ending_date }
+    end
     context 'with an authenticated user' do
       include_context 'With an authenticated User'
-      let(:user) { current_user }
       context 'when posting a new rent' do
-        let(:rent_json) do
-          { book_id: book.id, user_id: user.id,
-            starting_date: starting_date, ending_date: ending_date }
-        end
-
         before { http_response }
 
         it { is_expected.to have_http_status :created }
@@ -74,7 +69,7 @@ describe RentsController do
 
       context 'when posting an invalid rent' do
         let(:rent_json) do
-          { book_id: book.id, user_id: user.id }
+          { book_id: book.id, user_id: current_user.id }
         end
 
         before { http_response }
@@ -83,16 +78,6 @@ describe RentsController do
       end
     end
 
-    context 'whitout an authenticated user' do
-      let(:user) { build_stubbed(:user) }
-      let(:rent_json) do
-        { book_id: book.id, user_id: user.id,
-          starting_date: starting_date, ending_date: ending_date }
-      end
-
-      before { http_response }
-
-      it { is_expected.to have_http_status :unauthorized }
-    end
+    include_examples 'without an authenticated user'
   end
 end
