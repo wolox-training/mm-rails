@@ -27,11 +27,13 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'devise_token_auth'
 gem 'pundit', '~> 2.0.1'
 gem 'rack-reducer', require: 'rack/reducer'
+gem 'sidekiq'
 gem 'wor-paginate'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker', git: 'https://github.com/stympy/faker.git', branch: 'master'
   gem 'rspec-rails'
