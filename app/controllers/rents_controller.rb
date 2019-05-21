@@ -10,7 +10,7 @@ class RentsController < ApplicationController
     authorize rent
 
     if rent.save
-      RentMailer.with(rent: rent).notification_mail.deliver_now
+      RentMailer.with(rent: rent).notification_mail.deliver_later
       render json: rent, status: :created
     else
       render json: rent.errors, status: :unprocessable_entity
