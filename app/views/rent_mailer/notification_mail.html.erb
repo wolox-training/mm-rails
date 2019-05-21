@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to the books service, <%= @user.first_name %> !</h1>
+    <p>
+      Your rent has been succesfully at: <%= @rent.created_at %>.<br>
+      Book details: <%= @rent.book.title %>.<br>
+      Starting date: <%= @rent.starting_date %>.<br>
+      Ending date: <%= @rent.ending_date %>.<br>
+    </p>
+    <p>Thanks for renting and have a great day!</p>
+  </body>
+</html>
