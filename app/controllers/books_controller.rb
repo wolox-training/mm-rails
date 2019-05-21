@@ -9,7 +9,5 @@ class BooksController < ApplicationController
 
   def show
     render json: Book.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    head :not_found
   end
 end

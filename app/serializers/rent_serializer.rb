@@ -1,5 +1,8 @@
 class RentSerializer < ActiveModel::Serializer
-  attributes :id, :from, :to, :book, :user
+  attributes :id, :from, :to
+
+  has_one :book, serializer: BookSerializer
+  has_one :user, serializer: UserSerializer
 
   def from
     object.starting_date
