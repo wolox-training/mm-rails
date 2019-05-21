@@ -60,7 +60,7 @@ describe RentsController do
       context 'when posting a new rent' do
         let(:rent_json) do
           { book_id: book.id, user_id: user.id,
-            from: starting_date, to: ending_date }
+            starting_date: starting_date, ending_date: ending_date }
         end
 
         before { http_response }
@@ -87,7 +87,7 @@ describe RentsController do
       let(:user) { build_stubbed(:user) }
       let(:rent_json) do
         { book_id: book.id, user_id: user.id,
-          from: starting_date, to: ending_date }
+          starting_date: starting_date, ending_date: ending_date }
       end
 
       before { http_response }

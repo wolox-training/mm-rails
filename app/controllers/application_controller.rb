@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
+  include Wor::Paginate
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found
 
@@ -11,7 +13,7 @@ class ApplicationController < ActionController::API
 
   private
 
-  def render_record_not_found
-    head :not_found
+  def render_record_not_found(invalid)
+    render json: { errors: invalid.message }, status: :not_found
   end
 end

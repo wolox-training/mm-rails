@@ -9,8 +9,4 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   has_many :rents, dependent: :destroy
-
-  def rents_counter
-    rents.count
-  end
 end
