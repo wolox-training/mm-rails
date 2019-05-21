@@ -40,8 +40,8 @@ describe RentsController do
     end
 
     context 'without an authenticated user' do
-      let(:user_id) { 1 }
-      subject!(:http_response) { get :index, params: { user_id: user_id } }
+      let(:user) { create(:user) }
+      subject!(:http_response) { get :index, params: { user_id: user.id } }
 
       it { is_expected.to have_http_status :unauthorized }
     end
@@ -79,7 +79,7 @@ describe RentsController do
 
         before { http_response }
 
-        it { is_expected.to have_http_status :bad_request }
+        it { is_expected.to have_http_status :unprocessable_entity }
       end
     end
 

@@ -15,7 +15,7 @@ class RentsController < ApplicationController
     if rent.save
       render json: rent, status: :created
     else
-      render json: rent.errors, status: :bad_request
+      render json: rent.errors, status: :unprocessable_entity
     end
   end
 
