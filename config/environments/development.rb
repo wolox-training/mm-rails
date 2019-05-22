@@ -46,11 +46,11 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name: secrets.mailer_username,
-    password: secrets.mailer_password,
-    address: secrets.mailer_address,
-    domain: secrets.mailer_domain,
-    port: secrets.mailer_port,
-    authentication: secrets.mailer_authentication.to_sym
+    user_name: Rails.application.secrets.mailer[:username],
+    password: Rails.application.secrets.mailer[:password],
+    address: Rails.application.secrets.mailer[:address],
+    domain: Rails.application.secrets.mailer[:domain],
+    port: Rails.application.secrets.mailer[:port],
+    authentication: Rails.application.secrets.mailer[:authentication].to_sym
   }
 end
