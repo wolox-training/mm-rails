@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to the books service, <%= @user.first_name %> !</h1>
+    <h1>Here is your rent information, <%= @user.first_name %> !</h1>
     <p>
       Your rent has been succesfully at: <%= @rent.created_at %>.<br>
       Book details: <%= @rent.book.title %>.<br>

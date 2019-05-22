@@ -266,6 +266,7 @@ DEPENDENCIES
   rack-reducer
   rails (~> 5.1.7)
   rails-controller-testing
+  redis (~> 4.0)
   rspec-mocks
   rspec-rails
   rubocop (~> 0.68.1)
