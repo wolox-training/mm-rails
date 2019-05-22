@@ -12,7 +12,12 @@ class ApplicationController < ActionController::API
   protected
 
   def set_locale
-    I18n.locale = current_user.locale.downcase.to_sym || I18n.default_locale
+    I18n.locale = current_user_locale || I18n.default_locale
+  end
+
+  def current_user_locale
+    locale = current_user.locale.downcase.to_sym
+    I18n.available_locales.include?(locale) ? locale : nil
   end
 
   def configure_permitted_parameters
