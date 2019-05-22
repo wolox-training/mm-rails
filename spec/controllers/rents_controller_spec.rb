@@ -1,23 +1,15 @@
 require 'rails_helper'
 
 describe RentsController do
-  let!(:starting_date) { Date.new 2017, 1, 1 }
-  let!(:ending_date) { Date.new 2018, 1, 1 }
-  let!(:book) { create :book }
-  let!(:book2) { create :book }
   describe 'GET #index' do
     subject(:http_response) { get :index, params: { user_id: current_user.id } }
 
     context 'when an user is authenticated' do
       include_context 'With an authenticated User'
-      let!(:rent1) do
-        Rent.create book: book, user: current_user,
-                    starting_date: starting_date, ending_date: ending_date
+      let!(:rents) do
+        create_list(:rent, 2, user: current_user)
       end
-      let!(:rent2) do
-        Rent.create book: book2, user: current_user,
-                    starting_date: starting_date, ending_date: ending_date
-      end
+
       context 'when fetching all the rents' do
         before { http_response }
 
@@ -33,7 +25,7 @@ describe RentsController do
 
         it 'response with the user´s rents json' do
           expected = ActiveModel::Serializer::CollectionSerializer.new(
-            [rent1, rent2],
+            rents,
             serializer: RentSerializer
           ).to_json
           expect(response_body['page']).to eq JSON.parse(expected)
@@ -51,10 +43,15 @@ describe RentsController do
                      rent: rent_json },
            format: :json
     end
+
+    let!(:book) { create :book }
+    let(:starting_date) { Faker::Date.forward }
+    let(:ending_date) { Faker::Date.between(starting_date + 1, starting_date + 25) }
     let(:rent_json) do
       { book_id: book.id, user_id: current_user.id,
         starting_date: starting_date, ending_date: ending_date }
     end
+
     context 'with an authenticated user' do
       include_context 'With an authenticated User'
       context 'when posting a new rent' do
