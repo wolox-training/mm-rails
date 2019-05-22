@@ -4,13 +4,13 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Here is your rent information, <%= @user.first_name %> !</h1>
+    <h1><%= t('rent_notification_mail.title', name: @user.first_name) %></h1>
     <p>
-      Your rent has been succesfully at: <%= @rent.created_at %>.<br>
-      Book details: <%= @rent.book.title %>.<br>
-      Starting date: <%= @rent.starting_date %>.<br>
-      Ending date: <%= @rent.ending_date %>.<br>
+      <%= t('rent_notification_mail.created_at', created_at: @rent.created_at) %> <br>
+      <%= t('rent_notification_mail.book_details', details: @rent.book.title) %> <br>
+      <%= t('rent_notification_mail.starting_date', starting_date: @rent.starting_date) %> <br>
+      <%= t('rent_notification_mail.ending_date', ending_date: @rent.ending_date) %> <br>
     </p>
-    <p>Thanks for renting and have a great day!</p>
+    <p><%= t ('rent_notification_mail.greeting') %></p>
   </body>
 </html>

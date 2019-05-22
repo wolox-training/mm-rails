@@ -31,5 +31,7 @@ module WbooksApi
     config.api_only = true
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.i18n.default_locale = :es
   end
 end
