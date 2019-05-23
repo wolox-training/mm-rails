@@ -1,9 +1,11 @@
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   include Wor::Paginate
+  include Pundit
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found
+  rescue_from Pundit::NotAuthorizedError, with: :render_unauthorized
 
   protected
 
@@ -15,5 +17,9 @@ class ApplicationController < ActionController::API
 
   def render_record_not_found(invalid)
     render json: { errors: invalid.message }, status: :not_found
+  end
+
+  def render_unauthorized(invalid)
+    render json: { errors: invalid.message }, status: :unauthorized
   end
 end
