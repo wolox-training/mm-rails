@@ -25,6 +25,7 @@ class RentsController < ApplicationController
   end
 
   def validate_user
-    raise Pundit::NotAuthorizedError unless current_user.id.to_s == params[:user_id]
+    raise Pundit::NotAuthorizedError, 'Not allowed to use this resource' unless
+      current_user.id.to_s == params[:user_id]
   end
 end

@@ -1,31 +1,25 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show]
+  before_action :authenticate_user!, only: :me
 
   # GET /users
   def index
-    @users = User.all
-    render json: @users
+    render_paginated json: User.all
   end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: user
   end
 
   # GET /users/me
   def me
-    if current_user
-      render json: current_user
-    else
-      render json: {}, status: :not_found
-    end
+    render json: current_user
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.find(user_params[:id])
+  def user
+    @user ||= User.find(user_params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
