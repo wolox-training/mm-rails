@@ -1,12 +1,9 @@
 FactoryBot.define do
   factory :book_suggestion do
-    synopsis { 'MyString' }
-    price { 1.5 }
-    author { 'MyString' }
-    title { 'MyString' }
-    link { 'MyString' }
-    publisher { 'MyString' }
-    year { 'MyString' }
-    user { '' }
+    books_attributes
+    synopsis { Faker::String.random }
+    price { Faker::Number.decimal(2) }
+    link { Faker::String.random }
+    user
   end
 end
