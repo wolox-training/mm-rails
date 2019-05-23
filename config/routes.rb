@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     resources :rents, only: %i[index create]
   end
   resources :books, only: %i[index show]
+  resources :book_suggestions, only: :create
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
