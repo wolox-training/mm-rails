@@ -45,12 +45,7 @@ describe RentsController do
     end
 
     let!(:book) { create :book }
-    let(:starting_date) { Faker::Date.forward }
-    let(:ending_date) { Faker::Date.between(starting_date + 1, starting_date + 25) }
-    let(:rent_json) do
-      { book_id: book.id, user_id: current_user.id,
-        starting_date: starting_date, ending_date: ending_date }
-    end
+    let(:rent_json) { attributes_for(:rent, user_id: current_user.id, book_id: book.id) }
 
     context 'with an authenticated user' do
       include_context 'With an authenticated User'
