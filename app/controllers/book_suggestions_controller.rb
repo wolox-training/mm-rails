@@ -1,8 +1,12 @@
 class BookSuggestionsController < ApplicationController
   def create
-    book_suggestion = BookSuggestion.create!(book_suggestion_params)
+    book_suggestion = BookSuggestion.new(book_suggestion_params)
 
-    render json: book_suggestion, status: :created
+    if book_suggestion.save
+      render json: book_suggestion, status: :created
+    else
+      render json: book_suggestion.errors, status: :unprocessable_entity
+    end
   end
 
   def book_suggestion_params
