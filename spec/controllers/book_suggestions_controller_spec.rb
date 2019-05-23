@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+<<<<<<< HEAD
 describe BookSuggestionsController do
   describe 'POST #create' do
     subject(:http_response) { post :create, params: { book_suggestion: book_suggestion } }
@@ -28,4 +29,7 @@ describe BookSuggestionsController do
       end
     end
   end
+=======
+RSpec.describe BookSuggestionsController, type: :controller do
+>>>>>>> 0b05997... Adding books_controller#create and post route
 end

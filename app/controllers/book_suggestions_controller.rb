@@ -3,7 +3,7 @@ class BookSuggestionsController < ApplicationController
     book_suggestion = BookSuggestion.new(book_suggestion_params)
     return render json: book_suggestion, status: :created if book_suggestion.save
 
-    render json: book_suggestion.errors, status: :unprocessable_entity
+    render_errors(book_suggestion.errors, :unprocessable_entity)
   end
 
   private
