@@ -25,6 +25,7 @@ gem 'puma', '~> 3.7'
 # gem 'rack-cors'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'devise_token_auth'
+gem 'pundit', '~> 2.0.1'
 gem 'rack-reducer', require: 'rack/reducer'
 gem 'wor-paginate'
 

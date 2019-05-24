@@ -1,5 +1,5 @@
 class RentsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :validate_user
 
   def index
     render_paginated current_user.rents
@@ -7,6 +7,7 @@ class RentsController < ApplicationController
 
   def create
     rent = Rent.new(rent_params)
+    authorize rent
 
     if rent.save
       render json: rent, status: :created
@@ -21,5 +22,10 @@ class RentsController < ApplicationController
     params.require(:rent)
           .permit(:book_id, :starting_date, :ending_date)
           .merge(user_id: current_user.id)
+  end
+
+  def validate_user
+    raise Pundit::NotAuthorizedError, 'Not allowed to use this resource' unless
+      current_user.id.to_s == params[:user_id]
   end
 end
