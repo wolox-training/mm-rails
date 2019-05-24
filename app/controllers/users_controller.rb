@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    render_paginated json: User.all
+    render_paginated User
   end
 
   # GET /users/1
