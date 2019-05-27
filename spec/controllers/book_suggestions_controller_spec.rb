@@ -5,17 +5,7 @@ describe BookSuggestionsController do
     subject(:http_response) { post :create, params: { book_suggestion: book_suggestion } }
 
     context 'when posting a new book suggestion' do
-      let(:book_suggestion) do
-        {
-          synopsis: 'Una Sinopsis',
-          author: 'Tincho',
-          title: 'UnLibro',
-          link: 'wikipedia.com',
-          publisher: 'SuperBooks',
-          year: '1998',
-          price: 2313.23
-        }
-      end
+      let(:book_suggestion) { attributes_for(:book_suggestion) }
 
       before { http_response }
 
@@ -27,16 +17,7 @@ describe BookSuggestionsController do
     end
 
     context 'when posting an invalid book suggestion' do
-      let(:book_suggestion) do
-        {
-          synopsis: 'Una Sinopsis',
-          author: 'Tincho',
-          title: 'UnLibro',
-          link: 'wikipedia.com',
-          year: '1998',
-          price: 2313.23
-        }
-      end
+      let(:book_suggestion) { attributes_for(:book_suggestion).merge(year: 'invalid') }
 
       before { http_response }
 

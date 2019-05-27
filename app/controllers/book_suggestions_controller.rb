@@ -9,6 +9,8 @@ class BookSuggestionsController < ApplicationController
     end
   end
 
+  private
+
   def book_suggestion_params
     params.require(:book_suggestion)
           .permit(:synopsis, :price, :title, :author, :link, :publisher, :year)
