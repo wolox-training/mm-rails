@@ -8,6 +8,7 @@ describe BookSuggestion do
   it { is_expected.to validate_presence_of :link }
   it { is_expected.to validate_presence_of :publisher }
   it { is_expected.to validate_numericality_of(:year).only_integer }
+  it { is_expected.to validate_url_of :link }
 
   describe '#save' do
     context 'when saving a valid book suggestion' do

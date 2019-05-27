@@ -3,7 +3,7 @@ FactoryBot.define do
     books_attributes
     synopsis { Faker::String.random }
     price { Faker::Number.decimal(2) }
-    link { Faker::String.random }
+    link { Faker::Internet.url }
     user
   end
 end

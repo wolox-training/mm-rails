@@ -26,6 +26,8 @@ gem 'puma', '~> 3.7'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'devise_token_auth'
 gem 'rack-reducer', require: 'rack/reducer'
+gem 'validate_url', '~> 1.0.8', git: 'https://github.com/perfectline/validates_url.git',
+                                branch: 'master'
 gem 'wor-paginate'
 
 group :development, :test do
