@@ -31,6 +31,7 @@ gem 'sidekiq', '~>5.2.7'
 gem 'validate_url', '~> 1.0.8', git: 'https://github.com/perfectline/validates_url.git',
                                 branch: 'master'
 gem 'wor-paginate'
+gem 'httparty'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
