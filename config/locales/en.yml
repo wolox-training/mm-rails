@@ -30,4 +30,12 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  rent_notification_mail:
+    subject: "Your rent has been registered"
+    title: "Here is your rent information, %{name}!"
+    created_at: "Your rent has been succesfully at: %{created_at}."
+    book_details: "Book details: %{details}"
+    starting_date: "Starting date: %{starting_date}"
+    ending_date: "Ending date: %{ending_date}"
+    greeting: "Thanks for renting and have a great day!"
+    
