@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-<<<<<<< HEAD
 describe BookSuggestionsController do
   describe 'POST #create' do
     subject(:http_response) { post :create, params: { book_suggestion: book_suggestion } }
@@ -24,11 +23,7 @@ describe BookSuggestionsController do
     end
 
     context 'when posting an invalid book suggestion' do
-<<<<<<< HEAD
-      let(:book_suggestion) { attributes_for(:book_suggestion).merge(year: 'invalid') }
-=======
       let(:book_suggestion) { attributes_for(:book_suggestion, year: 'dsaf', title: nil) }
->>>>>>> 5c6edb9... Adding book_suggestion controller test cases
 
       before { http_response }
 
@@ -49,7 +44,4 @@ describe BookSuggestionsController do
       end
     end
   end
-=======
-RSpec.describe BookSuggestionsController, type: :controller do
->>>>>>> 0b05997... Adding books_controller#create and post route
 end
