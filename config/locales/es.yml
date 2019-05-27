@@ -1,0 +1,9 @@
+es:
+  rent_notification_mail:
+    subject: "Su alquiler ha sido registrado"
+    title: "Aquí está su información, %{name}!"
+    created_at: "Su alquiler se ha relizado satisfactoriamente en: %{created_at}."
+    book_details: "Detalles del libro: %{details}"
+    starting_date: "Fecha de inicio: %{starting_date}"
+    ending_date: "Fecha de fin: %{ending_date}"
+    greeting: "¡Gracias por alquilar y tenga un buen día!"
