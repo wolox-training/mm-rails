@@ -8,6 +8,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
 require 'wor/paginate/rspec'
+require 'validate_url/rspec_matcher'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
