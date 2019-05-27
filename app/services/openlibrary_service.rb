@@ -8,21 +8,20 @@ class OpenlibraryService
   end
 
   def search_by_isbn(isbn)
-    @isbn = isbn
-    isbn_string = "ISBN:#{@isbn}"
+    isbn_string = "ISBN:#{isbn}"
     options = { query: { bibkeys: isbn_string } }
     response = self.class.get('/books', options)
 
-    return parse_response_book(response[isbn_string]) if response.success?
+    return parse_response_book(response[isbn_string], isbn) if response.success?
 
     raise BookNotFoundError, response.response
   end
 
   private
 
-  def parse_response_book(book)
+  def parse_response_book(book, isbn)
     {
-      isbn: @isbn,
+      isbn: isbn,
       title: book['title'],
       subtitle: book['subtitle'],
       number_of_pages: book['number_of_pages'],
