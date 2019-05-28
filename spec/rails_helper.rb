@@ -9,6 +9,7 @@ require 'rspec/rails'
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
 require 'wor/paginate/rspec'
 require 'validate_url/rspec_matcher'
+require 'webmock/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
