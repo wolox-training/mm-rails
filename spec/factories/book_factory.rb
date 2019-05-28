@@ -1,6 +1,9 @@
 FactoryBot.define do
   factory :book do
-    books_attributes
+    author { Faker::Book.author }
+    title { Faker::Book.title }
+    publisher { Faker::Book.publisher }
+    year { Faker::Number.positive.truncate.to_s }
     genre { Faker::Book.genre }
     image { Faker::Alphanumeric.alphanumeric 25 }
   end
