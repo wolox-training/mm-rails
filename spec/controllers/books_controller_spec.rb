@@ -157,4 +157,11 @@ describe BooksController do
       end
     end
   end
+
+  describe 'GET #open_library_information' do
+    before do
+      stubbed_service = instance_double(OpenlibraryService)
+      allow(stubbed_service).to receive(:search_by_isbn).and_return({})
+    end
+  end
 end
