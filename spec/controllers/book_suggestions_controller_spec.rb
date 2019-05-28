@@ -36,11 +36,21 @@ describe BookSuggestionsController do
       it 'does not create a new book suggestion' do
         expect do
           post :create, params: { book_suggestion: book_suggestion }
-        end.to change { BookSuggestion.count }.by(0)
+        end.not_to(change { BookSuggestion.count })
       end
 
       it 'returns error messages' do
         expect(response_body['errors']).to be_present
+      end
+
+      it 'responses with title error message' do
+        error_msg = 'can\'t be blank'
+        expect(response_body['errors']['title']).to include error_msg
+      end
+
+      it 'responses with year error message' do
+        error_msg = 'is not a number'
+        expect(response_body['errors']['year']).to include error_msg
       end
     end
   end
