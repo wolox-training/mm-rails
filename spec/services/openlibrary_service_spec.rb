@@ -46,7 +46,8 @@ describe OpenlibraryService do
       end
 
       it 'raises BookNotFoundError' do
-        expect { subject }.to raise_error OpenlibraryService::BookNotFoundError
+        expect { subject }.to raise_error OpenlibraryService::BookNotFoundError,
+                                          'Invalid response book'
       end
     end
 
@@ -64,7 +65,8 @@ describe OpenlibraryService do
       end
 
       it 'raises BookNotFoundError' do
-        expect { subject }.to raise_error OpenlibraryService::BookNotFoundError
+        expect { subject }.to raise_error OpenlibraryService::BookNotFoundError,
+                                          'API request failed'
       end
     end
   end

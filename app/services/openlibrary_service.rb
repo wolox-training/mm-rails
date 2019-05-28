@@ -14,7 +14,7 @@ class OpenlibraryService
 
     return parse_response_book(response[isbn_string], isbn) if response.success?
 
-    raise BookNotFoundError, response.response
+    raise BookNotFoundError, 'API request failed'
   end
 
   private
