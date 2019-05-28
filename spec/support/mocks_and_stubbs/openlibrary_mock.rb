@@ -1,10 +1,10 @@
 module OpenlibraryMock
   BASE_URI = 'https://openlibrary.org/api'.freeze
 
-  def successfuly_book_get
+  def successfuly_book_get(isbn)
     stub_request(:get, "#{BASE_URI}/books")
       .with(
-        query: { bibkeys: 'ISBN:0385472579', format: 'json', jscmd: 'data' }
+        query: { bibkeys: "ISBN:#{isbn}", format: 'json', jscmd: 'data' }
       )
       .to_return(
         status: 200,
@@ -13,10 +13,10 @@ module OpenlibraryMock
       )
   end
 
-  def empty_book_get
+  def empty_book_get(isbn)
     stub_request(:get, "#{BASE_URI}/books")
       .with(
-        query: { bibkeys: 'ISBN:12345', format: 'json', jscmd: 'data' }
+        query: { bibkeys: "ISBN:#{isbn}", format: 'json', jscmd: 'data' }
       )
       .to_return(
         status: 200,
@@ -25,15 +25,14 @@ module OpenlibraryMock
       )
   end
 
-  def internal_server_error_book_get
+  def internal_server_error_book_get(isbn)
     stub_request(:get, "#{BASE_URI}/books")
       .with(
-        query: { bibkeys: 'ISBN:9780201485370', format: 'json', jscmd: 'data' }
+        query: { bibkeys: "ISBN:#{isbn}", format: 'json', jscmd: 'data' }
       )
       .to_return(
-        status: 200,
-        headers: { 'Content-Type' => 'application/json' },
-        body: '{}'
+        status: 500,
+        headers: { 'Content-Type' => 'application/json' }
       )
   end
 end

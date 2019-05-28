@@ -10,7 +10,7 @@ describe OpenlibraryService do
 
     context 'when getting a successfuly response' do
       before do
-        successfuly_book_get
+        successfuly_book_get(isbn)
         subject
       end
 
@@ -33,7 +33,7 @@ describe OpenlibraryService do
     end
 
     context 'when getting an empty response' do
-      before { empty_book_get }
+      before { empty_book_get(isbn) }
 
       let(:isbn) { '12345' }
 
@@ -51,7 +51,7 @@ describe OpenlibraryService do
     end
 
     context 'when getting an unsuccessfully response' do
-      before { internal_server_error_book_get }
+      before { internal_server_error_book_get(isbn) }
 
       let(:isbn) { '9780201485370' }
 
