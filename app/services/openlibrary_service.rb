@@ -1,3 +1,5 @@
+require 'set'
+
 class OpenlibraryService
   include HTTParty
   base_uri ENV['OPEN_LIBRARY_URI']
@@ -17,6 +19,10 @@ class OpenlibraryService
   private
 
   def parse_response_book(book, isbn)
+    raise CustomErrors::BookNotFoundError, 'Invalid response book' unless
+      book&.include_all?('title', 'subtitle', 'number_of_pages', 'authors') &&
+      book['authors'].is_a?(Array)
+
     {
       isbn: isbn,
       title: book['title'],
@@ -24,7 +30,5 @@ class OpenlibraryService
       number_of_pages: book['number_of_pages'],
       authors: book['authors'].map { |author| author['name'] }
     }
-  rescue StandardError
-    raise CustomErrors::BookNotFoundError, 'Invalid response book'
   end
 end
