@@ -23,7 +23,10 @@ describe BookSuggestionsController do
     end
 
     context 'when posting an invalid book suggestion' do
-      let(:book_suggestion) { attributes_for(:book_suggestion, year: Faker::TvShows::Simpsons.character, title: nil) }
+      let(:book_suggestion) do
+        attributes_for(:book_suggestion,
+                       year: Faker::TvShows::Simpsons.character, title: nil)
+      end
 
       before { http_response }
 
@@ -44,13 +47,13 @@ describe BookSuggestionsController do
       end
 
       it 'responses with title error message' do
-        error_msg = 'can\'t be blank'
-        expect(response_body['errors']['title']).to include error_msg
+        error_msg = 'Title can\'t be blank'
+        expect(response_body['errors']).to include error_msg
       end
 
       it 'responses with year error message' do
-        error_msg = 'is not a number'
-        expect(response_body['errors']['year']).to include error_msg
+        error_msg = 'Year is not a number'
+        expect(response_body['errors']).to include error_msg
       end
     end
   end
