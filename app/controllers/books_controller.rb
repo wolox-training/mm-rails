@@ -24,6 +24,6 @@ class BooksController < ApplicationController
   end
 
   def valid_isbn?
-    isbn&.contains_only_digits?
+    isbn&.is_number?
   end
 end
