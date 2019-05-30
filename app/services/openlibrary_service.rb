@@ -1,6 +1,6 @@
 class OpenlibraryService
   include HTTParty
-  base_uri 'https://openlibrary.org/api'
+  base_uri ENV['OPEN_LIBRARY_URI']
 
   default_params format: :json, jscmd: 'data'
 
