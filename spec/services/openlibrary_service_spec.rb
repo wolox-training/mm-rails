@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 describe OpenlibraryService do
-  include OpenlibraryMock
   let(:service) { OpenlibraryService.new }
-  let(:uri) { 'https://openlibrary.org/api/books' }
+  let(:uri) { "#{ENV['OPEN_LIBRARY_URI']}/books" }
 
   describe '#search_by_isbn' do
     subject { service.search_by_isbn(isbn) }
@@ -52,7 +51,7 @@ describe OpenlibraryService do
     end
 
     context 'when getting an unsuccessfully response' do
-      before { internal_server_error_book_get(isbn) }
+      before { openlibrary_server_error_book_get(isbn) }
 
       let(:isbn) { '9780201485370' }
 

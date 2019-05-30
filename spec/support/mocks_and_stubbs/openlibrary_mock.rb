@@ -26,7 +26,7 @@ module OpenlibraryMock
       )
   end
 
-  def internal_server_error_book_get(isbn)
+  def openlibrary_server_error_book_get(isbn)
     stub_request(:get, "#{BASE_URI}/books")
       .with(
         query: { bibkeys: "ISBN:#{isbn}", format: 'json', jscmd: 'data' }
