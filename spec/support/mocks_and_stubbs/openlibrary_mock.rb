@@ -1,5 +1,5 @@
 module OpenlibraryMock
-  BASE_URI = 'https://openlibrary.org/api'.freeze
+  BASE_URI = ENV['OPEN_LIBRARY_URI']
 
   def successfuly_book_get(isbn)
     stub_request(:get, "#{BASE_URI}/books")
@@ -9,7 +9,8 @@ module OpenlibraryMock
       .to_return(
         status: 200,
         headers: { 'Content-Type' => 'application/json' },
-        body: File.read('./spec/support/fixtures/openlibrary/response_success.json')
+        body: Rails.root.join('spec', 'support', 'fixtures', 'stub',
+                              'openlibrary', 'responses', 'success.json')
       )
   end
 
