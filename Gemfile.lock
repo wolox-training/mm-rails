@@ -306,7 +306,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
   validate_url (~> 1.0.8)!
-  webmock
+  webmock (~> 3.5.1)
   wor-paginate
 
 BUNDLED WITH
