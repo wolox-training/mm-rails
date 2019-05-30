@@ -1,5 +1,5 @@
 class String
-  def contains_only_digits?
+  def is_number?
     self !~ /\D/
   end
 end

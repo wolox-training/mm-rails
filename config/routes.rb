@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   resources :users, only: %i[index show] do
     resources :rents, only: %i[index create]
   end
-  resources :books, only: %i[index show]
-  get '/book_information', to: 'book_information#show'
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :book_suggestions, only: :create
+  resources :books, only: %i[index show] do
+    collection do
+      get :open_library_information
+    end
+  end
 end

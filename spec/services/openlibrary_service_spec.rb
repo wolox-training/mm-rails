@@ -39,14 +39,14 @@ describe OpenlibraryService do
 
       it 'makes an external web request' do
         subject
-      rescue OpenlibraryService::BookNotFoundError
+      rescue CustomErrors::BookNotFoundError
         expect(WebMock)
           .to have_requested(:get, "#{uri}?bibkeys=ISBN:#{isbn}&format=json&jscmd=data")
           .once
       end
 
       it 'raises BookNotFoundError' do
-        expect { subject }.to raise_error OpenlibraryService::BookNotFoundError,
+        expect { subject }.to raise_error CustomErrors::BookNotFoundError,
                                           'Invalid response book'
       end
     end
@@ -58,14 +58,14 @@ describe OpenlibraryService do
 
       it 'makes an external web request' do
         subject
-      rescue OpenlibraryService::BookNotFoundError
+      rescue CustomErrors::BookNotFoundError
         expect(WebMock)
           .to have_requested(:get, "#{uri}?bibkeys=ISBN:#{isbn}&format=json&jscmd=data")
           .once
       end
 
       it 'raises BookNotFoundError' do
-        expect { subject }.to raise_error OpenlibraryService::BookNotFoundError,
+        expect { subject }.to raise_error CustomErrors::BookNotFoundError,
                                           'API request failed'
       end
     end

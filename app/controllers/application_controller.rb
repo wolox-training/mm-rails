@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name locale])
   end
 
-  def render_errors(message, status)
+  def render_errors(message, status = :bad_request)
     Rails.logger.error("\nERROR:#{message}\n")
     render json: { errors: message }, status: status
   end
