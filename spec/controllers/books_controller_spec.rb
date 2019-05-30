@@ -159,9 +159,43 @@ describe BooksController do
   end
 
   describe 'GET #open_library_information' do
-    before do
-      stubbed_service = instance_double(OpenlibraryService)
-      allow(stubbed_service).to receive(:search_by_isbn).and_return({})
+    subject(:http_response) { get :open_library_information, params: { isbn: isbn } }
+    context 'when searching for a book by isbn' do
+      context 'when response from openlibrary is ok' do
+        let(:isbn) { Faker::Number.number(10) }
+        let(:book_information) { attributes_for(:book_information, isbn: isbn) }
+
+        before do
+          allow_any_instance_of(OpenlibraryService)
+            .to receive(:search_by_isbn)
+            .and_return(book_information)
+          http_response
+        end
+
+        it { is_expected.to have_http_status :ok }
+
+        it 'responses with a json' do
+          expect(response.content_type).to eq 'application/json'
+        end
+
+        it 'responses with the book information json' do
+          expect(response_body.to_json).to eq book_information.to_json
+        end
+      end
+    end
+
+    context 'when searching for a book with an invalid isbn' do
+      let(:isbn) { Faker::University.name }
+      before do
+        http_response
+      end
+
+      it { is_expected.to have_http_status :bad_request }
+
+      it 'responses with isbn error message' do
+        error_msg = 'ISBN should be numeric'
+        expect(response_body['errors']).to eq error_msg
+      end
     end
   end
 end
