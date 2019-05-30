@@ -13,7 +13,7 @@ class BooksController < ApplicationController
     return render_errors('ISBN should be numeric', :bad_request) unless valid_isbn?
 
     render json: OpenlibraryService.new.search_by_isbn(isbn), status: :ok
-  rescue OpenlibraryService::BookNotFoundError => e
+  rescue CustomErrors::BookNotFoundError => e
     render_errors(e.message, :not_found)
   end
 

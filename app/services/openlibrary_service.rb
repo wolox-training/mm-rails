@@ -4,9 +4,6 @@ class OpenlibraryService
 
   default_params format: :json, jscmd: 'data'
 
-  class BookNotFoundError < StandardError
-  end
-
   def search_by_isbn(isbn)
     isbn_string = "ISBN:#{isbn}"
     options = { query: { bibkeys: isbn_string } }
@@ -14,7 +11,7 @@ class OpenlibraryService
 
     return parse_response_book(response[isbn_string], isbn) if response.success?
 
-    raise BookNotFoundError, response.response
+    raise CustomErrors::BookNotFoundError, response.response
   end
 
   private
@@ -28,6 +25,6 @@ class OpenlibraryService
       authors: book['authors'].map { |author| author['name'] }
     }
   rescue StandardError
-    raise BookNotFoundError, 'Invalid response book'
+    raise CustomErrors::BookNotFoundError, 'Invalid response book'
   end
 end
