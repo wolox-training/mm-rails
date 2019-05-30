@@ -182,6 +182,27 @@ describe BooksController do
           expect(response_body.to_json).to eq book_information.to_json
         end
       end
+      context 'when openlibrary service responses with an error' do
+        let(:isbn) { Faker::Number.number(10) }
+        let(:error_msg) { 'Can\'t find the book' }
+
+        before do
+          allow_any_instance_of(OpenlibraryService)
+            .to receive(:search_by_isbn)
+            .and_raise(CustomErrors::BookNotFoundError, error_msg)
+          http_response
+        end
+
+        it { is_expected.to have_http_status :not_found }
+
+        it 'responses with a json' do
+          expect(response.content_type).to eq 'application/json'
+        end
+
+        it 'responses with the book information json' do
+          expect(response_body['errors']).to eq error_msg
+        end
+      end
     end
 
     context 'when searching for a book with an invalid isbn' do
