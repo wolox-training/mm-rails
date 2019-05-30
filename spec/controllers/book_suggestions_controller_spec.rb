@@ -23,7 +23,7 @@ describe BookSuggestionsController do
     end
 
     context 'when posting an invalid book suggestion' do
-      let(:book_suggestion) { attributes_for(:book_suggestion, year: 'dsaf', title: nil) }
+      let(:book_suggestion) { attributes_for(:book_suggestion, year: Faker::TvShows::Simpsons.character, title: nil) }
 
       before { http_response }
 
