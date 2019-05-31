@@ -38,4 +38,7 @@ en:
     starting_date: "Starting date: %{starting_date}"
     ending_date: "Ending date: %{ending_date}"
     greeting: "Thanks for renting and have a great day!"
+  rent_expiration_mail:
+    title: "Your rent expires today"
+    body: "You have to return the book"
     
