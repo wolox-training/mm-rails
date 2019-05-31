@@ -28,6 +28,7 @@ gem 'devise_token_auth'
 gem 'pundit', '~> 2.0.1'
 gem 'rack-reducer', require: 'rack/reducer'
 gem 'sidekiq', '~>5.2.7'
+gem 'sidekiq-scheduler', '~>3.0.0'
 gem 'validate_url', '~> 1.0.8', git: 'https://github.com/perfectline/validates_url.git',
                                 branch: 'master'
 gem 'wor-paginate'
