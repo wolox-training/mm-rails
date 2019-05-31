@@ -1,6 +1,6 @@
 :schedule:
   CheckExpiredRentsWorker:
-    cron: '0 9 * * *'   # Runs every day at 9:00 AM
+    cron: '0 9 * * * GMT-3'   # Runs every day at 9:00 AM
   
 development:
   :concurrency: 1
