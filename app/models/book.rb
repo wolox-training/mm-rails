@@ -1,5 +1,6 @@
 class Book < ApplicationRecord
-  validates :genre, :author, :title, :publisher, :image, presence: true
+  validates :genre, :author, :publisher, :image, presence: true
+  validates :title, presence: true, length: { maximum: 25 }
   validates :year, presence: true, numericality: { only_integer: true }
 
   scope :author, ->(author) { where author: author }
