@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1> <%= t('rent_expiration_mail.title')%> <%= @rent.ending_date %></h1>
+    <p><%= t('rent_expiration_mail.body')%>: "<%= @rent.book.title %>"</p>
+  </body>
+</html>

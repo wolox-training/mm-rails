@@ -7,3 +7,6 @@ es:
     starting_date: "Fecha de inicio: %{starting_date}"
     ending_date: "Fecha de fin: %{ending_date}"
     greeting: "¡Gracias por alquilar y tenga un buen día!"
+  rent_expiration_mail:
+    title: "Tu alquiler termina hoy"
+    body: "Tienes que devolver el libro"
