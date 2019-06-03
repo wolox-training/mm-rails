@@ -65,7 +65,7 @@ describe OpenlibraryService do
 
       it 'raises BookNotFoundError' do
         expect { subject }.to raise_error CustomErrors::BookNotFoundError,
-                                          'API request failed'
+                                          'Openlibrary API request failed'
       end
     end
   end
