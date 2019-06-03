@@ -22,9 +22,9 @@ class UserDashboard < Administrate::BaseDashboard
     confirmed_at: Field::DateTime,
     confirmation_sent_at: Field::DateTime,
     unconfirmed_email: Field::String,
-    first_name: Field::String,
-    last_name: Field::String,
-    email: Field::String,
+    first_name: Field::String.with_options(searchable: true),
+    last_name: Field::String.with_options(searchable: true),
+    email: Field::String.with_options(searchable: true),
     tokens: Field::String.with_options(searchable: false),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -42,10 +42,10 @@ class UserDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    rents
-    book_suggestions
     id
-    provider
+    first_name
+    last_name
+    email
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
