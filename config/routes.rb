@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :users
+    resources :books
+    resources :book_suggestions
+    resources :rents
+
+    root to: 'users#index'
+  end
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 

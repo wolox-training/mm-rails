@@ -30,6 +30,13 @@ module WbooksApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # Enable Flash, Cookies, MethodOverride for Administrate Gem
+    config.middleware.use ActionDispatch::Flash
+    config.session_store :cookie_store
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
+    config.middleware.use ::Rack::MethodOverride
+
     config.active_job.queue_adapter = :sidekiq
 
     config.i18n.available_locales = %i[es en]
