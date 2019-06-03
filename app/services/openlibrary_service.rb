@@ -1,34 +1,44 @@
-require 'set'
-
 class OpenlibraryService
   include HTTParty
-  base_uri ENV['OPEN_LIBRARY_URI']
+  base_uri Rails.application.secrets.open_library_uri
 
   default_params format: :json, jscmd: 'data'
 
   def search_by_isbn(isbn)
-    isbn_string = "ISBN:#{isbn}"
-    options = { query: { bibkeys: isbn_string } }
-    response = self.class.get('/books', options)
-
-    return parse_response_book(response[isbn_string], isbn) if response.success?
-
-    raise CustomErrors::BookNotFoundError, response.response
+    @isbn = isbn
+    parse_book(open_library_response)
   end
 
   private
 
-  def parse_response_book(book, isbn)
-    raise CustomErrors::BookNotFoundError, 'Invalid response book' unless
-      book&.include_all?('title', 'subtitle', 'number_of_pages', 'authors') &&
-      book['authors'].is_a?(Array)
+  def open_library_response
+    @isbn_string = "ISBN:#{@isbn}"
+    options = { query: { bibkeys: @isbn_string } }
+    response = self.class.get('/books', options)
+    raise CustomErrors::BookNotFoundError, response.response unless response.success?
 
+    response
+  end
+
+  def parse_book(response)
+    @book = response[@isbn_string]
+    raise CustomErrors::BookNotFoundError, 'Invalid response book' unless valid_book_attributes?
+
+    parsed_book_data
+  end
+
+  def valid_book_attributes?
+    @book && @book['authors'].is_a?(Array) &&
+      @book.include_all?('title', 'subtitle', 'number_of_pages', 'authors')
+  end
+
+  def parsed_book_data
     {
-      isbn: isbn,
-      title: book['title'],
-      subtitle: book['subtitle'],
-      number_of_pages: book['number_of_pages'],
-      authors: book['authors'].map { |author| author['name'] }
+      isbn: @isbn,
+      title: @book['title'],
+      subtitle: @book['subtitle'],
+      number_of_pages: @book['number_of_pages'],
+      authors: @book['authors'].map { |author| author['name'] }
     }
   end
 end
