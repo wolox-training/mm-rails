@@ -5,7 +5,7 @@ describe OpenlibraryService do
   let(:uri) { "#{Rails.application.secrets.open_library_uri}/books" }
 
   describe '#search_by_isbn' do
-    subject { service.search_by_isbn(isbn) }
+    subject(:response_book) { service.search_by_isbn(isbn) }
 
     context 'when getting a successfuly response' do
       before do
