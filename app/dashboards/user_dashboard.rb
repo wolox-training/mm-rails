@@ -83,29 +83,10 @@ class UserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    rents
-    book_suggestions
-    provider
-    uid
-    encrypted_password
-    reset_password_token
-    reset_password_sent_at
-    allow_password_change
-    remember_created_at
-    confirmation_token
-    confirmed_at
-    confirmation_sent_at
-    unconfirmed_email
     first_name
     last_name
     email
-    tokens
     locale
-    sign_in_count
-    current_sign_in_at
-    last_sign_in_at
-    current_sign_in_ip
-    last_sign_in_ip
   ].freeze
 
   # Overwrite this method to customize how users are displayed

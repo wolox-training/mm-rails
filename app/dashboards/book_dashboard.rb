@@ -13,7 +13,7 @@ class BookDashboard < Administrate::BaseDashboard
     genre: Field::String,
     author: Field::String,
     image: Field::String,
-    title: Field::String,
+    title: Field::String.with_options(searchable: true),
     publisher: Field::String,
     year: Field::String,
     created_at: Field::DateTime,
@@ -26,10 +26,11 @@ class BookDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-    rents
     id
-    genre
+    title
     author
+    genre
+    year
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
