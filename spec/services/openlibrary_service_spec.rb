@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe OpenlibraryService do
   let(:service) { OpenlibraryService.new }
-  let(:uri) { "#{ENV['OPEN_LIBRARY_URI']}/books" }
+  let(:uri) { "#{Rails.application.secrets.open_library_uri}/books" }
 
   describe '#search_by_isbn' do
     subject { service.search_by_isbn(isbn) }

@@ -1,5 +1,5 @@
 module OpenlibraryMock
-  BASE_URI = ENV['OPEN_LIBRARY_URI']
+  BASE_URI = Rails.application.secrets.open_library_uri
 
   def successfuly_book_get(isbn)
     stub_request(:get, "#{BASE_URI}/books")
