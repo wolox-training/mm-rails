@@ -57,6 +57,10 @@ describe RentsController do
         it 'responses with a json' do
           expect(response.content_type).to eq 'application/json'
         end
+
+        it 'responses with the created rent json with an id' do
+          expect(response_body['id']).to be_present
+        end
       end
 
       context 'when posting an invalid rent' do

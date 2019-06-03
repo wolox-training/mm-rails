@@ -19,6 +19,15 @@ class ApplicationController < ActionController::API
     render json: { errors: message }, status: status
   end
 
+  def render_result(result, options)
+    success_status = options[:success_status] || :ok
+    error_status = options[:error_status] || :unauthorized
+
+    return render json: result.output, status: success_status if result.success?
+
+    render_errors(result.errors, error_status)
+  end
+
   private
 
   def render_record_not_found(invalid)

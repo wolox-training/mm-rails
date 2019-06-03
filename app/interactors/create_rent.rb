@@ -1,12 +1,13 @@
 class CreateRent
   include Interactor
+  delegate :rent, to: :context
 
   def call
-    rent = context.rent
     if rent.save
       context.rent = rent
+      context.output = rent
     else
-      context.fail!
+      context.fail!(errors: rent.errors.full_messages)
     end
   end
 end
