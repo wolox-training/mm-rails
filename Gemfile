@@ -25,6 +25,7 @@ gem 'redis', '~> 4.0'
 # gem 'rack-cors', '~>5.2.7'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'devise_token_auth'
+gem 'httparty', '~> 0.17.0'
 gem 'pundit', '~> 2.0.1'
 gem 'rack-reducer', require: 'rack/reducer'
 gem 'sidekiq', '~>5.2.7'
@@ -32,7 +33,6 @@ gem 'sidekiq-scheduler', '~>3.0.0'
 gem 'validate_url', '~> 1.0.8', git: 'https://github.com/perfectline/validates_url.git',
                                 branch: 'master'
 gem 'wor-paginate'
-gem 'httparty', '~> 0.17.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -58,6 +58,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec-mocks'
   gem 'shoulda-matchers'
+  gem 'webmock', '~> 3.5.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

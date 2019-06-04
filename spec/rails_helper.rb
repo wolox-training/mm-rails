@@ -9,6 +9,7 @@ require 'rspec/rails'
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
 require 'wor/paginate/rspec'
 require 'validate_url/rspec_matcher'
+require 'webmock/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -65,6 +66,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Response::JSONParser, type: :controller
+  config.include OpenlibraryMock
 end
 
 Shoulda::Matchers.configure do |config|

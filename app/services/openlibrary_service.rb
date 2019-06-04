@@ -15,7 +15,8 @@ class OpenlibraryService
     @isbn_string = "ISBN:#{@isbn}"
     options = { query: { bibkeys: @isbn_string } }
     response = self.class.get('/books', options)
-    raise CustomErrors::BookNotFoundError, response.response unless response.success?
+    raise CustomErrors::BookNotFoundError, 'Openlibrary API request failed' unless
+      response.success?
 
     response
   end
