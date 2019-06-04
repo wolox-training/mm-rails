@@ -13,7 +13,7 @@ class RentsController < ApplicationController
       RentMailer.notification_mail(rent).deliver_later
       render json: rent, status: :created
     else
-      render json: rent.errors, status: :unprocessable_entity
+      render_errors(rent.errors.full_messages, :unprocessable_entity)
     end
   end
 
