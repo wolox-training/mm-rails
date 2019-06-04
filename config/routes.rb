@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :users, only: %i[index show edit update destroy]
+    resources :books, only: %i[index show new create edit update destroy]
+    resources :book_suggestions, only: %i[index show new create edit update destroy]
+    resources :rents, only: %i[index show new create edit update destroy]
+
+    root to: 'users#index'
+  end
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 
