@@ -3,6 +3,7 @@ class Rent < ApplicationRecord
   belongs_to :book
   validates :user, :book, :starting_date, :ending_date, presence: true
   validate :end_after_start, :starting_must_be_after_year_1900
+  scope :expiring_today, -> { where(ending_date: Time.zone.today) }
 
   def end_after_start
     return if starting_date.nil? || ending_date.nil?
