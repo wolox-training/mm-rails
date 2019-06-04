@@ -157,4 +157,64 @@ describe BooksController do
       end
     end
   end
+
+  describe 'GET #open_library_information' do
+    subject(:http_response) { get :open_library_information, params: { isbn: isbn } }
+
+    context 'when response from openlibrary is ok' do
+      let(:isbn) { Faker::Number.number(10) }
+      let(:book_information) { attributes_for(:book_information, isbn: isbn) }
+
+      before do
+        allow_any_instance_of(OpenlibraryService)
+          .to receive(:search_by_isbn)
+          .and_return(book_information)
+        http_response
+      end
+
+      it { is_expected.to have_http_status :ok }
+
+      it 'responses with a json' do
+        expect(response.content_type).to eq 'application/json'
+      end
+
+      it 'responses with the book information json' do
+        expect(response_body.to_json).to eq book_information.to_json
+      end
+    end
+    context 'when openlibrary service responses with an error' do
+      let(:isbn) { Faker::Number.number(10) }
+      let(:error_msg) { 'Can\'t find the book' }
+
+      before do
+        allow_any_instance_of(OpenlibraryService)
+          .to receive(:search_by_isbn)
+          .and_raise(CustomErrors::BookNotFoundError, error_msg)
+        http_response
+      end
+
+      it { is_expected.to have_http_status :not_found }
+
+      it 'responses with a json' do
+        expect(response.content_type).to eq 'application/json'
+      end
+
+      it 'responses with the book information json' do
+        expect(response_body['errors']).to eq error_msg
+      end
+    end
+    context 'when searching for a book with an invalid isbn' do
+      let(:isbn) { Faker::University.name }
+      before do
+        http_response
+      end
+
+      it { is_expected.to have_http_status :bad_request }
+
+      it 'responses with isbn error message' do
+        error_msg = 'ISBN should be numeric'
+        expect(response_body['errors']).to eq error_msg
+      end
+    end
+  end
 end
