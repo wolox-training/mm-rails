@@ -8,13 +8,9 @@ class RentsController < ApplicationController
   def create
     rent = Rent.new(rent_params)
     authorize rent
+    result = RentCreation.call(rent: rent)
 
-    if rent.save
-      RentMailer.notification_mail(rent).deliver_later
-      render json: rent, status: :created
-    else
-      render_errors(rent.errors.full_messages, :unprocessable_entity)
-    end
+    render_result(result, success_status: :created, error_status: :unprocessable_entity)
   end
 
   private
