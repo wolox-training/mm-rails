@@ -24,7 +24,7 @@ gem 'redis', '~> 4.0'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors', '~>5.2.7'
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'administrate', '~> 0.11.0'
+gem 'administrate', '~> 0.13.0'
 gem 'devise_token_auth'
 gem 'httparty', '~> 0.17.0'
 gem 'interactor', '~> 3.0'
